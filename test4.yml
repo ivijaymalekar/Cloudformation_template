@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  WebInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0292a7daeeda6b851
+      KeyName: CFTest
+      SecurityGroupIds:
+        - sg-03cae667d13a5a457
+      SubnetId: subnet-064465b61c939e3f6
+      UserData: 
+        Fn::Base64: 
+          !Sub |
+            #!/bin/bash
+            mkdir /mnt/data
+            mkfs -t ext4 /dev/xvdf
+            mount /dev/xvdf /mnt/data
+	    yum install httpd	
